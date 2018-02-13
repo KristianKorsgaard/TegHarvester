@@ -6,8 +6,14 @@
 
 #include "TegHarvester.h"
 
-TegHarvester::TegHarvester(byte keepAlivePin=17 /* Digital (A3) */, byte enableSamplePin=6 /* Digital */, byte storageVoltagePinA=6 /* Analog */)
+TegHarvester::TegHarvester(byte keepAlivePin, byte enableSamplePin, byte storageVoltagePinA, double aref)
 : keepAlivePin_(keepAlivePin), enableSamplePin_(enableSamplePin), storageVoltagePinA_(storageVoltagePinA)
+{
+  setAnalogReference(aref);
+  setOffset();
+}
+
+void TegHarvester::begin()
 {
   pinMode(keepAlivePin_, OUTPUT);
   pinMode(enableSamplePin_, OUTPUT);
@@ -16,10 +22,12 @@ TegHarvester::TegHarvester(byte keepAlivePin=17 /* Digital (A3) */, byte enableS
 void TegHarvester::enableSample()
 {
   digitalWrite(enableSamplePin_, HIGH);
+  sampleState_ = true;
 }
 void TegHarvester::disableSample()
 {
   digitalWrite(enableSamplePin_, LOW);
+  sampleState_ = false;
 }
 void TegHarvester::toggleSample()
 {
@@ -29,7 +37,9 @@ void TegHarvester::toggleSample()
 
 void TegHarvester::readVoltage()
 {
-  setSample(analogRead(storageVoltagePinA_) * arefStep_);
+  unsigned int v = analogRead(storageVoltagePinA_);
+  v += getOffset();
+  setSample( v * arefStep_ );
 }
 double TegHarvester::getSample() const
 {
@@ -45,9 +55,9 @@ void TegHarvester::setSample(double sample)
   {
     sample_ = 0.0;
   }
-  else if(sample > aref)
+  else if(sample > aref_)
   {
-    sample_ = aref;
+    sample_ = aref_;
   }
   else
   {
@@ -55,12 +65,16 @@ void TegHarvester::setSample(double sample)
   }
 }
 
-void TegHarvester::setAnalogReference(double aref = 3.3)
+void TegHarvester::setAnalogReference(double aref)
 {
   if(aref > 0.0 && aref <= 5.0)
   {
     aref_ = aref;
     arefStep_ = aref_ / 1024;
+  }
+  else
+  {
+    aref = 3.3;
   }
 }
 void TegHarvester::getAnalogReference() const
@@ -71,4 +85,13 @@ void TegHarvester::getAnalogReference() const
 void TegHarvester::keepAlive(bool alive = true)
 {
   digitalWrite(keepAlivePin_, alive ? HIGH : LOW);
+}
+
+void TegHarvester::setOffset(char offset)
+{
+  offset_ = offset;
+}
+char TegHarvester::getOffset() const
+{
+  return offset_;
 }
