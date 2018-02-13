@@ -1,0 +1,9 @@
+TegHarvester	KEYWORD1
+enableSample	KEYWORD2
+disableSample	KEYWORD2
+toggleSample	KEYWORD2
+getSample	KEYWORD2
+setSample	KEYWORD2
+setAnalogReference	KEYWORD2
+getAnalogReference	KEYWORD2
+keepAlive	KEYWORD2
