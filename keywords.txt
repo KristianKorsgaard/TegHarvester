@@ -7,3 +7,4 @@ setSample	KEYWORD2
 setAnalogReference	KEYWORD2
 getAnalogReference	KEYWORD2
 keepAlive	KEYWORD2
+calibrate	KEYWORD2

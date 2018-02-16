@@ -96,3 +96,41 @@ char TegHarvester::getOffset() const
 {
   return offset_;
 }
+
+void TegHarvester::calibrate(double aim, int runs, bool autoOffset)
+{
+  if(Serial)
+  {
+    double samples = 0.0;
+    int offset = 0;
+
+    Serial.println("Beginning calibration -------------");
+    Serial.print("Calibrating");
+
+    for(int i = 0; i < runs; i++)
+    {
+      samples += analogRead(storageVoltagePinA_) * arefStep_;
+      delay(250);
+      Serial.print(".");
+    }
+    Serial.println(".");
+    samples /= runs;
+
+    Serial.print("Average sample value: ");
+    Serial.print(samples, 3);
+    Serial.println(" V");
+
+    Serial.print("Suggested Offset: ");
+    offset = round((aim-samples)/arefStep_);
+    Serial.println(offset);
+
+    if(autoOffset)
+    {
+      setOffset(offset);
+      Serial.println("Offset has been installed");
+    }
+
+    Serial.println("End of calibration ----------------");
+    Serial.println("");
+  }
+}

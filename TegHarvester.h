@@ -46,6 +46,9 @@ public:
   void setOffset(char offset = -4);
   char getOffset() const;
 
+  // Calibrate MCU with known input voltage
+  void calibrate(double aim, int runs, bool autoOffset = false);
+
 private:
   void readVoltage();
   byte keepAlivePin_, enableSamplePin_, storageVoltagePinA_;
