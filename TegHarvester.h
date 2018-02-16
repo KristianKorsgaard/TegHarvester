@@ -30,7 +30,7 @@ public:
   // otherwise return sample from memory
   double getSample() const;
   // Set sample in memory
-  void setSample(double sample);
+  void setSample(double sample = 0.0);
 
   // Set analog reference value to calculate voltage sampleState_
   // Use in conjunction with analogReference() in Arduino IDE

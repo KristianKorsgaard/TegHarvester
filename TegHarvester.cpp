@@ -11,6 +11,7 @@ TegHarvester::TegHarvester(byte keepAlivePin, byte enableSamplePin, byte storage
 {
   setAnalogReference(aref);
   setOffset();
+  setSample();
 }
 
 void TegHarvester::begin()
