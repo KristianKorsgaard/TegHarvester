@@ -38,7 +38,7 @@ void TegHarvester::toggleSample()
 
 void TegHarvester::readVoltage()
 {
-  unsigned int v = analogRead(storageVoltagePinA_);
+  int v = analogRead(storageVoltagePinA_);
   v += getOffset();
   setSample( v * arefStep_ );
 }
