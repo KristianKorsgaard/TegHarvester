@@ -12,7 +12,7 @@
 class TegHarvester
 {
 public:
-  TegHarvester::TegHarvester(
+  TegHarvester(
     byte keepAlivePin=17 /* Digital (A3) */,
     byte enableSamplePin=6 /* Digital */,
     byte storageVoltagePinA=6 /* Analog */,
@@ -28,7 +28,7 @@ public:
 
   // Read Voltage sample from TegHarvester if "enableSample" is set,
   // otherwise return sample from memory
-  double getSample() const;
+  double getSample();
   // Set sample in memory
   void setSample(double sample = 0.0);
 
@@ -36,7 +36,7 @@ public:
   // Use in conjunction with analogReference() in Arduino IDE
   void setAnalogReference(double aref = 3.3);
   // Return stored analog reference
-  void getAnalogReference() const;
+  double getAnalogReference() const;
 
   // Set keep_alive on TegHarvester, to keep Core alive
   void keepAlive(bool alive = true);

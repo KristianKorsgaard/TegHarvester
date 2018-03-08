@@ -42,7 +42,7 @@ void TegHarvester::readVoltage()
   v += getOffset();
   setSample( v * arefStep_ );
 }
-double TegHarvester::getSample() const
+double TegHarvester::getSample()
 {
   if(sampleState_)
   {
@@ -78,7 +78,7 @@ void TegHarvester::setAnalogReference(double aref)
     aref = 3.3;
   }
 }
-void TegHarvester::getAnalogReference() const
+double TegHarvester::getAnalogReference() const
 {
   return aref_;
 }
