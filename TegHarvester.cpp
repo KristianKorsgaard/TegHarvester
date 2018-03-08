@@ -83,7 +83,7 @@ void TegHarvester::getAnalogReference() const
   return aref_;
 }
 
-void TegHarvester::keepAlive(bool alive = true)
+void TegHarvester::keepAlive(bool alive)
 {
   digitalWrite(keepAlivePin_, alive ? HIGH : LOW);
 }
